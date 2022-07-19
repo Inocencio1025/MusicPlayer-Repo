@@ -13,7 +13,7 @@ body {
     background: linear-gradient(
         0deg,
         rgb(247,247,247) 23.8%,
-        rgb(186, 243, 255) 92%
+        rgb(86, 22, 246) 92%
     );
 
     display: flex;
@@ -63,6 +63,7 @@ body {
     left: 0;
 
     animation: rotate 8s linear infinite;
+    
 
     animation-play-state: paused;
 }
@@ -91,19 +92,19 @@ body {
 .action-btn {
     background-color: #fff;
     border: 0;
-    color: #dfdbdf;
-    font-size: 20px;
+    color: black;
+    font-size: 40px;
     cursor: pointer;
     padding: 10px;
     margin: 0 20px;
 }
 
 .action-btn-big {
-    color: #cdc2d0;
+    color: black;
     font-size: 30px;
 }
 
-.actino-btn:focus{
+.action-btn:focus{
     outline: 0;
 }
 
@@ -117,7 +118,7 @@ body {
     padding: 10px 10px 10px 150px;
     opacity: 0;
     transform: translateY(0%);
-    transition: transform 0.3s ease-in opacity 0.3s ease-in;
+    transition: transform 0.5s ease-in, opacity 0.5s ease-in;
 }
 
 .music-info h4 {

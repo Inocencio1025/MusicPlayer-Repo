@@ -12,43 +12,92 @@ const cover = document.querySelector('#cover')
 const songs = ['cityEscape', 'metallicMadness' , 'pumpkinHill', 'x5Intro']
 
 // keep track of songs
-let songIndex = 3
+let songIndex = 0
 
 // Initially loads 
-LoadSong(songs[songIndex])
-console.log("am i working???????")
+loadSong(songs[songIndex])
+
 
 // Update song details
-function LoadSong(song){
+function loadSong(song){
     title.innerText = song
     audio.src = `Music/${song}.mp3`
     cover.src = `Images/${song}.jpg`
+
+    
 }
 
 
-function PlaySong(){
-musicContainer.classList.add('play')
-playBtn.querySelector('i.fas').classList.remove('fa-play')
-playBtn.querySelector('i.fas').classList.add('fa-pause')
+function playSong(){
+    musicContainer.classList.add('play')
+    playBtn.querySelector('i.fas').classList.remove('fa-play')
+    playBtn.querySelector('i.fas').classList.add('fa-pause')
 
-audio.play()
+    audio.play()
 }
 
 
-function PauseSong(){
-playBtn.querySelector('i.fas').classList.remove('fa-pause')
-playBtn.querySelector('i.fas').classList.add('fa-play')
+function pauseSong(){
+    musicContainer.classList.remove('play')
+    playBtn.querySelector('i.fas').classList.remove('fa-pause')
+    playBtn.querySelector('i.fas').classList.add('fa-play')
 
-audio.pause()
+    audio.pause()
 }
+
+function prevSong(){
+    songIndex--
+    if(songIndex < 0){
+        songIndex = songs.length - 1
+    }
+    loadSong(songs[songIndex])
+    playSong()
+}
+
+function nextSong(){
+    songIndex++
+    if(songIndex > songs.length - 1){
+        songIndex = 0
+    }
+    loadSong(songs[songIndex])
+    playSong()
+}
+
+function updateProgress(e){
+    const {duration, currentTime} = e.srcElement
+    const progressPercent = (currentTime /duration) * 100
+    progress.style.width = `${progressPercent}%`
+}
+
+function setProgress(e){
+    const width = this.clientWidth
+    const clickX = e.offsetX
+    const duration = audio.duration
+
+    audio.currentTime = (clickX/width) *duration
+}
+
+
+
 
 // Event listeners
 playBtn.addEventListener('click', () =>{
     const isPlaying = musicContainer.classList.contains('play')
 
     if(isPlaying){
-        PauseSong()
+        pauseSong()
+
     } else {
-        PlaySong()
+        playSong()
     }
 })
+
+//change song event
+
+prevBtn.addEventListener('click', prevSong)
+nextBtn.addEventListener('click', nextSong)
+
+progressContainer.addEventListener('click', setProgress)
+
+audio.addEventListener('timeupdate', updateProgress)
+audio.addEventListener('ended', nextSong)
